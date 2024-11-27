@@ -5,17 +5,17 @@ description = "Muse for Kubernetes"
 authors = [{ name = "Luis Diaz", email = "code.luis.diaz@proton.me" }]
 readme = "README.md"
 keywords = ['python']
-requires-python = ">=3.9,<4.0"
+requires-python = ">=3.11.6,<4.0"
 classifiers = [
     "Intended Audience :: Developers",
     "Programming Language :: Python",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+  "ih-muse>=0.0.20"
 ]
 
 [project.urls]
@@ -23,18 +23,25 @@ Homepage = "https://infinitehaiku.github.io/ih-muse-k8s/"
 Repository = "https://github.com/infinitehaiku/ih-muse-k8s"
 Documentation = "https://infinitehaiku.github.io/ih-muse-k8s/"
 
-[tool.uv]
-dev-dependencies = [
+[dependency-groups]
+dev = [
     "pytest>=7.2.0",
+    "piceli>=0.0.4",
     "pre-commit>=2.20.0",
     "tox-uv>=1.11.3",
     "deptry>=0.20.0",
-    "mypy>=0.991",
+    "mypy>=1.13.0",
     "pytest-cov>=4.0.0",
     "ruff>=0.6.9",
-    "mkdocs>=1.4.2",
-    "mkdocs-material>=8.5.10",
-    "mkdocstrings[python]>=0.26.1",
+]
+docs = [
+    "sphinx>=7.0",
+    "sphinx-autodoc2>=0.5.0",
+    "sphinx-copybutton>=0.5.2",
+    "sphinx-design>=0.5.0",
+    "sphinx-inline-tabs>=2023.4.21",
+    "myst-parser>=2",
+    "furo>=2023",
 ]
 
 [build-system]

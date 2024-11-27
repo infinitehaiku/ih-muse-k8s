@@ -1,19 +1,27 @@
 .PHONY: install
 install: ## Install the virtual environment and install the pre-commit hooks
-	@echo "🚀 Creating virtual environment using uv"
-	@uv sync
+	@echo "🚀 Creating virtual environment using virtualenv"
+	@uv run python -m virtualenv .venv
+	@uv sync --group dev
 	@uv run pre-commit install
 
-.PHONY: check
-check: ## Run code quality tools.
-	@echo "🚀 Checking lock file consistency with 'pyproject.toml'"
-	@uv lock --locked
+
+.PHONY: check-pre-commit
+check-pre-commit:
 	@echo "🚀 Linting code: Running pre-commit"
 	@uv run pre-commit run -a
+
+.PHONY: check-python
+check-python: ## Run code quality tools.
+	@echo "🚀 Checking lock file consistency with 'pyproject.toml'"
+	@uv lock --locked
 	@echo "🚀 Static type checking: Running mypy"
 	@uv run mypy
 	@echo "🚀 Checking for obsolete dependencies: Running deptry"
 	@uv run deptry .
+
+.PHONY: check
+check: check-python check-pre-commit
 
 .PHONY: test
 test: ## Test the code with pytest
@@ -38,13 +46,22 @@ publish: ## Publish a release to PyPI.
 .PHONY: build-and-publish
 build-and-publish: build publish ## Build and publish.
 
-.PHONY: docs-test
-docs-test: ## Test if documentation can be built without warnings or errors
-	@uv run mkdocs build -s
+.PHONY: docs-install
+docs-install: ## Install dependencies for building documentation
+	@echo "🚀 Installing documentation dependencies"
+	@uv sync --group docs
 
-.PHONY: docs
-docs: ## Build and serve the documentation
-	@uv run mkdocs serve
+.PHONY: docs-build
+docs-build: docs-install ## Build the documentation
+	@echo "🚀 Building documentation"
+	@uv run pip install -e ./py-ih-muse
+	@uv run python -m sphinx -b html docs/ docs/_build/html || \
+		uv run sphinx-build -b html docs/ docs/_build/html
+
+.PHONY: docs-serve
+docs-serve: docs-build ## Serve the documentation locally
+	@echo "🚀 Serving documentation at http://localhost:8000"
+	@uv run python -m http.server --directory docs/_build/html 8000
 
 .PHONY: help
 help:
