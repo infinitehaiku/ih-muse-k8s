@@ -15,7 +15,9 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 dependencies = [
-  "ih-muse>=0.0.20"
+  "ih-muse>=0.0.25",
+  "kubernetes>=29.0.0",
+  "humanfriendly>=10.0",
 ]
 
 [project.urls]
@@ -25,14 +27,17 @@ Documentation = "https://infinitehaiku.github.io/ih-muse-k8s/"
 
 [dependency-groups]
 dev = [
-    "pytest>=7.2.0",
-    "piceli>=0.0.4",
-    "pre-commit>=2.20.0",
-    "tox-uv>=1.11.3",
     "deptry>=0.20.0",
+    "kubernetes-typed>=18.20.2",
     "mypy>=1.13.0",
+    "piceli>=0.0.5",
+    "pre-commit>=2.20.0",
+    "pytest>=7.2.0",
+    "pytest-asyncio>=0.24.0",
     "pytest-cov>=4.0.0",
     "ruff>=0.6.9",
+    "tox-uv>=1.11.3",
+    "types-humanfriendly>=10.0.1.20241105",
 ]
 docs = [
     "sphinx>=7.0",

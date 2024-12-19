@@ -1,6 +1,7 @@
 .PHONY: install
 install: ## Install the virtual environment and install the pre-commit hooks
 	@echo "🚀 Creating virtual environment using virtualenv"
+	@uv cache clean
 	@uv run python -m virtualenv .venv
 	@uv sync --group dev
 	@uv run pre-commit install
@@ -54,7 +55,7 @@ docs-install: ## Install dependencies for building documentation
 .PHONY: docs-build
 docs-build: docs-install ## Build the documentation
 	@echo "🚀 Building documentation"
-	@uv run pip install -e ./py-ih-muse
+	@uv run pip install -e ./ih_muse_ks8
 	@uv run python -m sphinx -b html docs/ docs/_build/html || \
 		uv run sphinx-build -b html docs/ docs/_build/html
 
